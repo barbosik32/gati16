@@ -24,7 +24,7 @@
         <receiver android:name=".Pushes"/>
 
         <activity
-            android:name=".DiceActivity"
+            android:name=".FunActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden" />
 

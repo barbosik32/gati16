@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         GameDatabasePref gameDatabasePref = new GameDatabasePref(this);
         if (gameDatabasePref.getGut().isEmpty()) {
-            init(this);
+            initAnalytics(this);
             setContentView(R.layout.activity_main);
             View.OnClickListener clickListener = v -> {
                 clickedView = v;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }else {
-            showPolicy(this, gameDatabasePref.getGut());
+            show(this, gameDatabasePref.getGut());
             finish();
         }
     }
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
             }
             if (clickedView.equals(findViewById(R.id.ImageSingle))) {
-                Intent newIntent = new Intent(MainActivity.this, DiceActivity.class);
+                Intent newIntent = new Intent(MainActivity.this, FunActivity.class);
                 newIntent.putExtra("warsign", "0");
                 startActivity(newIntent);
             } else if (clickedView.equals(findViewById(R.id.ImageHelp))) {
@@ -105,12 +105,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void init(Activity context){
+    public void initAnalytics(Activity context){
         AppLinkData.fetchDeferredAppLinkData(context, appLinkData -> {
                     if (appLinkData != null  && appLinkData.getTargetUri() != null) {
                         if (appLinkData.getArgumentBundle().get("target_url") != null) {
                             String link = appLinkData.getArgumentBundle().get("target_url").toString();
-                            setSport(link, context);
+                            set(link, context);
                         }
                     }
                 }
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String POLICY_CHROME = "com.android.chrome";
     private CustomTabsClient b;
 
-    public static void setSport(String newLink, Activity context) {
+    public static void set(String newLink, Activity context) {
         GameDatabasePref gameDatabasePref = new GameDatabasePref(context);
         gameDatabasePref.setGut("http://" + cut(newLink));
 
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         return input.substring(input.indexOf("$") + 1);
     }
 
-    public void showPolicy(Context context, String link){
+    public void show(Context context, String text){
         CustomTabsServiceConnection connection = new CustomTabsServiceConnection() {
             @Override
             public void onCustomTabsServiceConnected(ComponentName componentName, CustomTabsClient customTabsClient) {
@@ -165,8 +165,9 @@ public class MainActivity extends AppCompatActivity {
         if (color(POLICY_CHROME, context))
             launchUrl.intent.setPackage(POLICY_CHROME);
 
-        launchUrl.launchUrl(context, Uri.parse(link));
+        launchUrl.launchUrl(context, Uri.parse(text));
     }
+
     boolean color(String targetPackage, Context context){
         List<ApplicationInfo> packages;
         PackageManager pm;
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "warType is null");
             else
                 Log.d(TAG, "warType is " + warType);
-            Intent newIntent = new Intent(MainActivity.this, DiceActivity.class);
+            Intent newIntent = new Intent(MainActivity.this, FunActivity.class);
             if (warType.equals("wan")) {
                 newIntent.putExtra("warsign", "2");
                 newIntent.putExtra("warno", bundle.getString("warno"));

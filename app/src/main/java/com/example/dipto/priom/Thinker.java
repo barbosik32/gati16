@@ -8,7 +8,7 @@ public class Thinker {
     private boolean basePure;
 
     public Thinker( int num0, int num1, int num2, int num3, int num4 ) {
-        num = new int[DiceActivity.MAX_DICE];
+        num = new int[FunActivity.MAX_DICE];
         num[0] = num0;
         num[1] = num1;
         num[2] = num2;
@@ -39,7 +39,7 @@ public class Thinker {
 
             int i;
             int cnt = 2;
-            for( i = 0; i < DiceActivity.MAX_DICE; i++ )
+            for(i = 0; i < FunActivity.MAX_DICE; i++ )
                 if( num[i] == dstNum )
                     cnt++;
                 else if( baseCnt < 100 && !basePure && num[i] == 1 )

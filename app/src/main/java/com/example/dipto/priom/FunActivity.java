@@ -25,52 +25,52 @@ import android.widget.Toast;
 import java.io.File;
 
 
-public class DiceActivity extends AppCompatActivity implements View.OnTouchListener {
-    private final static String TAG = DiceActivity.class.getName();
+public class FunActivity extends AppCompatActivity implements View.OnTouchListener {
+    private final static String TAG = FunActivity.class.getName();
     private final int MAX_PERSON = 2;
     private ImageView ivHead[];
     public final static int MAX_DICE = 5;
-    private PlayThing dice[][];
-    private ScoreView yourScoreView, myScoreView;
-    private SayViewMaker yourSayViewMaker, mySayViewMaker;
-    private Thinker thinker;
-    private SayValue mySayValue;
-    private final int MAX_KEY = 15;
-    private KeyView keyView[];
-    private ImageView diceCup;
-    private ImageView frame;
-    private ImageView imageGray[], imageSide[];
-    private ImageView imageWin, imageLose;
-    private GestureDetector gd;
-    private View touchView;
-    private int resultState;
-    private int focusPerson;
-    private int runSerialNo;
-    private MediaPlayer mpClick = null;
-    private int MAX_TRACE = 10;
-    private SayValue sayValueTrace[];
-    private int currTrace;
-    private boolean isPure;
-    private boolean gameRunning;
-    private boolean haveSaid;
+     PlayThing dice[][];
+     ScoreView yourScoreView, myScoreView;
+     SayViewMaker yourSayViewMaker, mySayViewMaker;
+     Thinker thinker;
+     SayValue mySayValue;
+     final int MAX_KEY = 15;
+     KeyView keyView[];
+     ImageView diceCup;
+     ImageView frame;
+     ImageView imageGray[], imageSide[];
+     ImageView imageWin, imageLose;
+     GestureDetector gd;
+     View touch;
+     int resultState;
+     int focusPerson;
+     int runino;
+     MediaPlayer mpClick = null;
+     int MAX_TRACE = 10;
+     SayValue sayValueTrace[];
+     int currTrace;
+     boolean isPure;
+     boolean gameRunning;
+     boolean haveSaid;
 
-    private int warSign;
-    private boolean warServer;
-    private int phoneSum;
-    private char getDiceValue[] = new char[2];
-    private boolean isFirstFocus;
-    private SayValue yourSayValue;
-    private final char CMD_SET_DICE = 0;
-    private final char CMD_SAY = 1;
+     int warSign;
+     boolean warServer;
+     int phoneSum;
+     char getDiceValue[] = new char[2];
+     boolean isFirstFocus;
+     SayValue yourSayValue;
+     final char CMD_SET_DICE = 0;
+     final char CMD_SAY = 1;
 
-    private final int SUB_CMD_INTELLIGENCE_GAME_WAR_MSG = 8030;
-    private final int WAR_CMD_DICE_SET_DICE = 2;
-    private final int WAR_CMD_DICE_NOTIFY_DICE_SET = 3;
-    private final int WAR_CMD_DICE_SAY = 4;
-    private final int WAR_CMD_DICE_NOTIFY_SAY = 5;
-    private int warNo;
-    private int warPhoneId;
-    private boolean yourDiceSetted;
+     final int SUB_CMD_INTELLIGENCE_GAME_WAR_MSG = 8030;
+     final int WAR_CMD_DICE_SET_DICE = 2;
+     final int WAR_CMD_DICE_NOTIFY_DICE_SET = 3;
+     final int WAR_CMD_DICE_SAY = 4;
+     final int WAR_CMD_DICE_NOTIFY_SAY = 5;
+     int warNo;
+     int warPhoneId;
+     boolean yourDiceSetted;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
             }
         }
         gameRunning = false;
-        runSerialNo = 0;
+        runino = 0;
         haveSaid = false;
         getDiceValue[1] = (char)-1;
         File audioFile = new File(  Environment.getExternalStorageDirectory().toString() + "/dice/work/click.wav" );
@@ -263,7 +263,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                 if( mySayValue != null ) {
                     int i;
                     for( i = 0; i < MAX_KEY; i++ )
-                        if( touchView == keyView[i] ) {
+                        if( touch == keyView[i] ) {
                             if( mpClick != null )
                                 mpClick.start();
                             break;
@@ -405,7 +405,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                 Log.d(TAG, "warType is " + warType );
             if( warType.equals( "wan" )) {
                 warSign = 2;
-                runSerialNo++;
+                runino++;
                 warNo = Integer.parseInt( bundle.getString( "warno" ));
                 warPhoneId = Integer.parseInt( bundle.getString( "warphoneid" ));
                 if( warPhoneId == 0 )
@@ -417,7 +417,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                 new Thread( new runGame()).start();
             } else {
                 warSign = 1;
-                runSerialNo++;
+                runino++;
                 String server = bundle.getString( "server" );
                 if( server.equals( "1" ))
                     warServer = true;
@@ -457,7 +457,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
             Log.d(TAG, "run game" );
             gameRunning = true;
             haveSaid = false;
-            myRunSerialNo = runSerialNo;
+            myRunSerialNo = runino;
             focusPerson = -1;
             if( warSign == 0 )
                 thinker = new Thinker( dice[0][0].getNum(), dice[0][1].getNum(), dice[0][2].getNum(), dice[0][3].getNum(), dice[0][4].getNum());
@@ -485,7 +485,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
 
             int times = 0;
             while( true ){
-                if( myRunSerialNo != runSerialNo )
+                if( myRunSerialNo != runino)
                     return;
                 for( i = 0; i < MAX_DICE; i++ )
                     dice[1][i].setNum((int)( Math.random() * 6 ) + 1 );
@@ -532,7 +532,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
             }
             Log.d(TAG, "waiting yourDiceSet" );
             while( warSign != 0 && !yourDiceSetted ) {
-                if( myRunSerialNo != runSerialNo ) {
+                if( myRunSerialNo != runino) {
                     Log.d(TAG, "wait other side return" );
                     return;
                 }
@@ -541,7 +541,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                 } catch( Exception e ) {
                 }
             }
-            if( myRunSerialNo != runSerialNo )
+            if( myRunSerialNo != runino)
                 return;
             if( warSign == 1 ) {
                 for( i = 0; i < MAX_DICE; i++ )
@@ -574,7 +574,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                         Thread.sleep( 1000 );
                     } catch( Exception e ) {
                     }
-                    if( myRunSerialNo != runSerialNo )
+                    if( myRunSerialNo != runino)
                         return;
                     thinker.say();
                     haveSaid = true;
@@ -591,13 +591,13 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                         yourSayValue.type = SayValue.SAY_VALUE_TYPE_SAY;
                         yourSayValue.count = yourSayValue.num = -1;
                         updateHandler.post( refreshRunnable );
-                        while( myRunSerialNo == runSerialNo && yourSayValue.type == SayValue.SAY_VALUE_TYPE_SAY && yourSayValue.num < 0 ) {
+                        while( myRunSerialNo == runino && yourSayValue.type == SayValue.SAY_VALUE_TYPE_SAY && yourSayValue.num < 0 ) {
                             try{
                                 Thread.sleep( 500 );
                             } catch( Exception e ) {
                             }
                         }
-                        if( myRunSerialNo != runSerialNo )
+                        if( myRunSerialNo != runino)
                             return;
                         haveSaid = true;
                         if( yourSayValue.type == SayValue.SAY_VALUE_TYPE_OPEN )
@@ -614,13 +614,13 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                 currTrace = 0;
                 sayValueTrace[currTrace] = mySayValue.clone();
 
-                while( myRunSerialNo == runSerialNo && mySayValue.type == SayValue.SAY_VALUE_TYPE_SAY && mySayValue.num <= 0 ) {
+                while( myRunSerialNo == runino && mySayValue.type == SayValue.SAY_VALUE_TYPE_SAY && mySayValue.num <= 0 ) {
                     try{
                         Thread.sleep( 500 );
                     } catch( Exception e ) {
                     }
                 }
-                if( myRunSerialNo != runSerialNo )
+                if( myRunSerialNo != runino)
                     return;
                 haveSaid = true;
                 if( mySayValue.count > 100 || mySayValue.num == 1 )
@@ -641,7 +641,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                 Thread.sleep( 1000 );
             } catch( Exception e ) {
             }
-            if( myRunSerialNo != runSerialNo )
+            if( myRunSerialNo != runino)
                 return;
 
             int cnt, num;
@@ -791,7 +791,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
     };
 
     public boolean onTouch(View v, MotionEvent event) {
-        touchView = v;
+        touch = v;
         return gd.onTouchEvent( event );
     }
 
@@ -877,7 +877,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
             if( keyNo < 10 ) {
                 if( focusPerson != 1 ) {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "It is not your turn!", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "It is not your turn!", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                     return;
                 }
@@ -888,7 +888,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                 else if( mySayValue.num == 0 ) {
                     if( keyNo == 0 || keyNo > 6 ) {
                         Looper.prepare();
-                        Toast.makeText( DiceActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText( FunActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
                         Looper.loop();
                         return;
                     }
@@ -910,7 +910,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                     }
                     if( !checkOk ) {
                         Looper.prepare();
-                        Toast.makeText( DiceActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText( FunActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
                         Looper.loop();
                         return;
                     }
@@ -944,7 +944,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
 //                    }
                 } else {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                     return;
                 }
@@ -965,7 +965,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                     updateHandler.post( refreshRunnable );
                 } else {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                 }
             } else if( keyNo == 11 ) {
@@ -974,13 +974,13 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                     updateHandler.post( refreshRunnable );
                 } else {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "Input error!", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                 }
             } else if( keyNo == 12 ) {
                 if( !haveSaid ) {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "You have not said, can not open!", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "You have not said, can not open!", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                     return;
                 }
@@ -1019,11 +1019,11 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                     updateHandler.post( refreshRunnable );
                 } else if( !( mySayValue.type == SayValue.SAY_VALUE_TYPE_SAY && mySayValue.num <= 0 )) {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "Can not cancel!", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "Can not cancel!", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                 } else {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "Already empty!", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "Already empty!", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                 }
             } else if( keyNo == 14 ) {
@@ -1031,7 +1031,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnTouchListe
                     new Thread( new runGame()).start();
                 else {
                     Looper.prepare();
-                    Toast.makeText( DiceActivity.this, "Can not shake the dices", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( FunActivity.this, "Can not shake the dices", Toast.LENGTH_SHORT ).show();
                     Looper.loop();
                 }
             }
