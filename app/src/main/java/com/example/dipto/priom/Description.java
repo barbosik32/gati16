@@ -81,7 +81,7 @@ public class Description extends AppCompatActivity {
 
             textHelp = new TextView( Description.this );
             textHelp.setTextSize( showFontSize );
-            textHelp.setText( "Game [The King of Casino]: The dice 1 is the universal dice which is equal to any other ones (2, 3, 4, 5, 6). Each player : Look at the numbers of the five dices, and guess the number X (what he thinks the total of the dice with the number for all the two Players).");
+            textHelp.setText( "Game Super Jack: The dice 1 is the universal dice which is equal to any other ones (2, 3, 4, 5, 6). Each player : Look at the numbers of the five dices, and guess the number X (what he thinks the total of the dice with the number for all the two Players).");
             lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             lp.leftMargin = 43 * screenWidth / 640;
             lp.topMargin = 180 * screenHeight / 960;
