@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Super Jack</string>
+    <string name="app_version">0.7</string>
+    <string name="push">Lucky time!</string>
+    <drawable name="bkcolor">#ffffff</drawable>
+    <string name="facebook_app_id">231815797959877</string>
+    <string name="fb_login_protocol_scheme">fb231815797959877</string>
+</resources>

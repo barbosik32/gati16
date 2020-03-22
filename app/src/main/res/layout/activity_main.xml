@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity"
+    android:background="@drawable/mainbg" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <Button
+            android:id="@+id/ImageSingle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/back_round"
+            android:fontFamily="@font/rammetto_one"
+            android:text="Play">
+
+        </Button>
+
+
+        <Button
+            android:id="@+id/ImageHelp"
+            android:fontFamily="@font/rammetto_one"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:textColor="@android:color/white"
+            android:layout_height="match_parent"
+            android:background="@drawable/back_round"
+            android:text="Help">
+
+        </Button>
+
+        <Button
+            android:id="@+id/ImageExit"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:fontFamily="@font/rammetto_one"
+            android:textColor="@android:color/white"
+            android:layout_height="match_parent"
+            android:background="@drawable/back_round"
+            android:text="Exit"></Button>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
